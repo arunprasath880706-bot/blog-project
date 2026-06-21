@@ -22,7 +22,7 @@
 Hello, ApexPlanet!
 
 ### GitHub Repository:
-[https://github.com/arunprasath880706-bot]
+[https://github.com/arunprasath880706-bot/blog-project]
 
 ---
 
