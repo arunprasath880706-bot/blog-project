@@ -1,52 +1,62 @@
 <?php
 session_start();
-require_once 'config.php';
+require_once 'config/database.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
+$page_title = 'Login';
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
     
-    $sql = "SELECT * FROM users WHERE username = :username";
-    $stmt = $pdo->prepare($sql);
+    $query = "SELECT * FROM users WHERE username = :username";
+    $stmt = $pdo->prepare($query);
     $stmt->execute(['username' => $username]);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if ($user && password_verify($password, $user['password'])) {
+    if($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-        header('Location: dashboard.php');
+        header('Location: index.php');
         exit();
     } else {
         $error = "Invalid username or password!";
     }
 }
+
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <style>
-        body { font-family: Arial; max-width: 400px; margin: 50px auto; padding: 20px; }
-        input { width: 100%; padding: 10px; margin: 5px 0 15px; }
-        button { background: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-        .error { color: red; }
-    </style>
-</head>
-<body>
-    <h2>Login</h2>
-    
-    <?php if(isset($error)) echo "<p class='error'>$error</p>"; ?>
-    
-    <form method="POST">
-        <label>Username:</label>
-        <input type="text" name="username" required>
+<div class="container mt-5">
+    <div class="form-container">
+        <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
         
-        <label>Password:</label>
-        <input type="password" name="password" required>
+        <?php if(isset($error)): ?>
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
         
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="register.php">Register</a></p>
-</body>
-</html>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="username" class="form-label">
+                    <i class="fas fa-user"></i> Username
+                </label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <p class="text-center mt-3">
+                Don't have an account? <a href="register.php">Register here</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<?php include 'includes/footer.php'; ?>

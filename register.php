@@ -1,49 +1,64 @@
 <?php
-require_once 'config.php';
+session_start();
+require_once 'config/database.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
+$page_title = 'Register';
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = trim($_POST['username']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     
-    $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
-    $stmt = $pdo->prepare($sql);
+    // Check if username exists
+    $check_query = "SELECT * FROM users WHERE username = :username";
+    $check_stmt = $pdo->prepare($check_query);
+    $check_stmt->execute(['username' => $username]);
     
-    try {
-        $stmt->execute(['username' => $username, 'password' => $password]);
-        $success = "Registration successful! <a href='login.php'>Login here</a>";
-    } catch(PDOException $e) {
+    if($check_stmt->rowCount() > 0) {
         $error = "Username already exists!";
+    } else {
+        $query = "INSERT INTO users (username, password) VALUES (:username, :password)";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(['username' => $username, 'password' => $password]);
+        
+        header('Location: login.php');
+        exit();
     }
 }
+
+include 'includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-    <style>
-        body { font-family: Arial; max-width: 400px; margin: 50px auto; padding: 20px; }
-        input { width: 100%; padding: 10px; margin: 5px 0 15px; }
-        button { background: #007bff; color: white; padding: 10px 20px; border: none; cursor: pointer; }
-        .error { color: red; }
-        .success { color: green; }
-    </style>
-</head>
-<body>
-    <h2>Register</h2>
-    
-    <?php if(isset($error)) echo "<p class='error'>$error</p>"; ?>
-    <?php if(isset($success)) echo "<p class='success'>$success</p>"; ?>
-    
-    <form method="POST">
-        <label>Username:</label>
-        <input type="text" name="username" required>
+<div class="container mt-5">
+    <div class="form-container">
+        <h2><i class="fas fa-user-plus"></i> Register</h2>
         
-        <label>Password:</label>
-        <input type="password" name="password" required>
+        <?php if(isset($error)): ?>
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
         
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="login.php">Login</a></p>
-</body>
-</html>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="username" class="form-label">
+                    <i class="fas fa-user"></i> Username
+                </label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">
+                    <i class="fas fa-lock"></i> Password
+                </label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+            <p class="text-center mt-3">
+                Already have an account? <a href="login.php">Login here</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<?php include 'includes/footer.php'; ?>

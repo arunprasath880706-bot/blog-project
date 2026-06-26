@@ -1,0 +1,478 @@
+/* ============================================
+   CUSTOM STYLES - BLOG PROJECT
+   Task 3: UI Improvements
+   ============================================ */
+
+/* ----- GLOBAL RESET & BASE ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----- NAVIGATION BAR ----- */
+.navbar {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    padding: 12px 0;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%) !important;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.navbar-brand i {
+    color: #f1c40f;
+    margin-right: 10px;
+}
+
+.navbar .nav-link {
+    font-weight: 600;
+    padding: 8px 18px !important;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+}
+
+.navbar .nav-link i {
+    margin-right: 6px;
+}
+
+/* ----- POST CARDS ----- */
+.post-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #ffffff;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-left: 5px solid #3498db;
+}
+
+.post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(52, 152, 219, 0.20);
+    border-left-color: #e74c3c;
+}
+
+.post-card .card-body {
+    padding: 1.8rem 2rem;
+}
+
+.post-card .card-title {
+    color: #2c3e50;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.post-card .card-title i {
+    color: #3498db;
+    margin-right: 10px;
+}
+
+.post-card .card-text {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.post-card .text-muted {
+    font-size: 0.85rem;
+    color: #7f8c8d !important;
+}
+
+.post-card .text-muted i {
+    margin-right: 5px;
+}
+
+/* ----- POST BUTTONS ----- */
+.post-card .btn-sm {
+    border-radius: 25px;
+    padding: 5px 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.post-card .btn-warning {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border: none;
+    color: #fff;
+}
+
+.post-card .btn-warning:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+}
+
+.post-card .btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: none;
+}
+
+.post-card .btn-danger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+/* ----- SEARCH FORM ----- */
+.search-wrapper {
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-bottom: 30px;
+}
+
+.search-wrapper .input-group {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.search-wrapper .input-group-text {
+    background: #fff;
+    border: 2px solid #e9ecef;
+    border-right: none;
+    padding: 10px 18px;
+}
+
+.search-wrapper .input-group-text i {
+    color: #3498db;
+    font-size: 1.1rem;
+}
+
+.search-wrapper .form-control {
+    border: 2px solid #e9ecef;
+    border-left: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.search-wrapper .form-control:focus {
+    border-color: #3498db;
+    box-shadow: none;
+}
+
+.search-wrapper .btn-primary {
+    border-radius: 0 50px 50px 0 !important;
+    padding: 10px 30px;
+    font-weight: 600;
+}
+
+.search-wrapper .btn-secondary {
+    border-radius: 50px !important;
+    padding: 10px 25px;
+}
+
+/* ----- PAGINATION ----- */
+.pagination-wrapper {
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    margin-top: 20px;
+}
+
+.pagination .page-link {
+    border: none;
+    border-radius: 50% !important;
+    margin: 0 4px;
+    padding: 10px 16px;
+    color: #2c3e50;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .page-link:hover {
+    background: #3498db;
+    color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #bdc3c7;
+    background: transparent;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    border-radius: 25px !important;
+    width: auto;
+    padding: 10px 20px;
+}
+
+/* ----- PAGE INFO ----- */
+.page-info {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-top: 12px;
+}
+
+.page-info i {
+    color: #3498db;
+    margin-right: 5px;
+}
+
+/* ----- BADGE (Search Results) ----- */
+.search-badge {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.search-badge i {
+    margin-right: 8px;
+}
+
+/* ----- ALERTS ----- */
+.alert {
+    border: none;
+    border-radius: 16px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #eaf4fb, #d4e9f7);
+    color: #1a5276;
+}
+
+.alert-info .alert-link {
+    color: #1a5276;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #fde8e8, #fad1d1);
+    color: #922b21;
+}
+
+/* ----- FORM CONTAINER ----- */
+.form-container {
+    background: #ffffff;
+    padding: 40px 45px;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    color: #2c3e50;
+    font-weight: 800;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 4px solid #3498db;
+}
+
+.form-container h2 i {
+    color: #3498db;
+    margin-right: 12px;
+}
+
+.form-container .form-label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-container .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 12px 18px;
+    transition: all 0.3s ease;
+}
+
+.form-container .form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
+}
+
+.form-container .btn {
+    border-radius: 50px;
+    padding: 10px 35px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.form-container .btn-primary {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border: none;
+}
+
+.form-container .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.form-container .btn-secondary {
+    border: 2px solid #bdc3c7;
+}
+
+.form-container .btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* ----- FOOTER ----- */
+footer {
+    margin-top: auto;
+    background: linear-gradient(135deg, #2c3e50, #1a252f) !important;
+    padding: 20px 0;
+    border-top: 3px solid #f1c40f;
+}
+
+footer small {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+footer small i {
+    color: #f1c40f;
+    margin: 0 5px;
+}
+
+/* ----- RESPONSIVE DESIGN ----- */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    .post-card .card-body {
+        padding: 1.2rem;
+    }
+    
+    .post-card .card-title {
+        font-size: 1.1rem;
+    }
+    
+    .form-container {
+        padding: 20px;
+        margin: 0 10px;
+    }
+    
+    .pagination .page-link {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+    
+    .pagination .page-item:first-child .page-link,
+    .pagination .page-item:last-child .page-link {
+        padding: 6px 14px;
+        font-size: 0.85rem;
+    }
+    
+    .search-wrapper {
+        padding: 15px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .post-card .btn-sm {
+        padding: 4px 14px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-card .card-body {
+        padding: 1rem;
+    }
+    
+    .post-card .card-title {
+        font-size: 1rem;
+    }
+    
+    .search-wrapper .btn-primary,
+    .search-wrapper .btn-secondary {
+        font-size: 0.85rem;
+        padding: 8px 16px;
+    }
+    
+    .pagination .page-link {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}
+
+/* ----- ANIMATIONS ----- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.post-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.post-card:nth-child(1) { animation-delay: 0.05s; }
+.post-card:nth-child(2) { animation-delay: 0.10s; }
+.post-card:nth-child(3) { animation-delay: 0.15s; }
+.post-card:nth-child(4) { animation-delay: 0.20s; }
+.post-card:nth-child(5) { animation-delay: 0.25s; }
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
