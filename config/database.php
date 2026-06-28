@@ -1,30 +1,26 @@
 <?php
-// ============================================
-// DATABASE CONNECTION
-// Task 2 & 3: Database Setup
-// ============================================
-
-// Database credentials
+// Database configuration with PDO (Prepared Statements)
 $host = 'localhost';
 $dbname = 'blog';
 $username = 'root';
-$password = '';  // Leave empty if no password set
+$password = '';
 
 try {
-    // Create PDO instance with MySQL
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    // Create PDO connection
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     
-    // Set PDO error mode to Exception
+    // Set error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Set default fetch mode to Associative Array
+    // Set default fetch mode
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     
-    // Optional: Uncomment to test connection
-    // echo "✅ Connected successfully to database: $dbname";
-    
 } catch(PDOException $e) {
-    // Display error if connection fails
-    die("❌ Connection failed: " . $e->getMessage());
+    die("Connection failed: " . $e->getMessage());
+}
+
+// Start session for authentication
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 ?>

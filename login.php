@@ -1,62 +1,68 @@
 <?php
-session_start();
 require_once 'config/database.php';
 
-$page_title = 'Login';
+$errors = [];
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = trim($_POST['username']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = trim(htmlspecialchars($_POST['username']));
     $password = $_POST['password'];
     
-    $query = "SELECT * FROM users WHERE username = :username";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute(['username' => $username]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Validate inputs
+    if (empty($username) || empty($password)) {
+        $errors[] = "Username and password are required";
+    }
     
-    if($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        header('Location: index.php');
-        exit();
-    } else {
-        $error = "Invalid username or password!";
+    // Check credentials (USING PREPARED STATEMENT)
+    if (empty($errors)) {
+        $stmt = $pdo->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
+        
+        // Verify password
+        if ($user && password_verify($password, $user['password'])) {
+            // Login successful - store user info in session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+            
+            // Redirect to index
+            header('Location: index.php');
+            exit();
+        } else {
+            $errors[] = "Invalid username or password";
+        }
     }
 }
 
 include 'includes/header.php';
 ?>
 
-<div class="container mt-5">
-    <div class="form-container">
-        <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+<div class="auth-form">
+    <h2>🔑 Login</h2>
+    
+    <?php if (!empty($errors)): ?>
+        <div class="errors">
+            <?php foreach ($errors as $error): ?>
+                <p class="error">❌ <?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
         
-        <?php if(isset($error)): ?>
-            <div class="alert alert-danger">
-                <i class="fas fa-exclamation-circle"></i> <?php echo $error; ?>
-            </div>
-        <?php endif; ?>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
         
-        <form method="POST" action="">
-            <div class="mb-3">
-                <label for="username" class="form-label">
-                    <i class="fas fa-user"></i> Username
-                </label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">
-                    <i class="fas fa-lock"></i> Password
-                </label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </button>
-            <p class="text-center mt-3">
-                Don't have an account? <a href="register.php">Register here</a>
-            </p>
-        </form>
-    </div>
+        <button type="submit">Login</button>
+    </form>
+    
+    <p>Don't have an account? <a href="register.php">Register here</a></p>
 </div>
 
 <?php include 'includes/footer.php'; ?>

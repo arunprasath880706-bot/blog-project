@@ -1,18 +1,21 @@
 <?php
-session_start();
 require_once 'config/database.php';
 
-if(!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
+// Check if user is logged in and is admin
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+    die("❌ You don't have permission to delete posts.");
 }
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$post_id = $_GET['id'] ?? null;
+if (!$post_id) {
+    die("Post ID not provided.");
+}
 
-$query = "DELETE FROM posts WHERE id = :id";
-$stmt = $pdo->prepare($query);
-$stmt->execute(['id' => $id]);
+// Delete post (USING PREPARED STATEMENT)
+$stmt = $pdo->prepare("DELETE FROM posts WHERE id = ?");
+$stmt->execute([$post_id]);
 
-header('Location: index.php');
+// Redirect back to index
+header('Location: index.php?deleted=1');
 exit();
 ?>
